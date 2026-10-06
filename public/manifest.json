@@ -1,0 +1,17 @@
+{
+  "name": "TrackNTune — Car & Bike Maintenance Tracker",
+  "short_name": "TrackNTune",
+  "description": "Log service history, track mileage, and monitor vehicle maintenance status.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/images/bike_scooter.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

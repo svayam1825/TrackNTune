@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TrackNTune — Smart Vehicle Maintenance, Garage Records & AI Mechanic</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%2316181c'/%3E%3Cpath d='M20 62l7-20a8 8 0 018-6h30a8 8 0 018 6l7 20' stroke='%23f5a623' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='30' cy='66' r='8' fill='%23f5a623'/%3E%3Ccircle cx='70' cy='66' r='8' fill='%23f5a623'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#2563eb" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="auth-required">
+
+<section id="authGate" class="auth-gate">
+  <div class="auth-gate-shell">
+    <aside class="auth-story-panel">
+      <div class="auth-brand-lockup"><span class="brand-badge">TNT</span><span>TrackNTune</span></div>
+      <div class="auth-story-copy">
+        <span class="auth-eyebrow">YOUR VEHICLE. IN GOOD HANDS.</span>
+        <h1 id="authStoryTitle">A smarter way to care for every mile.</h1>
+        <p id="authStoryDescription">Keep your vehicle, service history and upcoming maintenance organized in one calm, clear dashboard.</p>
+        <div class="auth-feature-list" id="authFeatureList">
+          <div><span>01</span><p><strong>Know what’s next</strong><br />Stay ahead of service dates and document renewals.</p></div>
+          <div><span>02</span><p><strong>See the full picture</strong><br />Track fuel, maintenance and running costs together.</p></div>
+          <div><span>03</span><p><strong>Make every trip count</strong><br />Keep useful vehicle details close at hand.</p></div>
+        </div>
+      </div>
+      <div class="auth-story-footer"><span class="auth-live-dot"></span> Built for the road ahead <span>•</span> TrackNTune 2026</div>
+      <div class="auth-orbit orbit-one"></div><div class="auth-orbit orbit-two"></div>
+    </aside>
+
+    <div class="auth-form-panel">
+      <div class="auth-form-topline"><span>WELCOME</span><span>SECURE PORTAL</span></div>
+      <div class="auth-form-heading">
+        <span class="auth-role-icon" id="authRoleIcon">🚘</span>
+        <div><h2 id="authModalTitle">Personal vehicle owner</h2><p id="authRoleDescription">Sign in to manage your vehicles and maintenance.</p></div>
+      </div>
+
+      <div class="auth-tabs" id="authRoleTabs" aria-label="Choose account type">
+        <button class="auth-tab active" type="button" data-arole="personal"><span>🚘</span><span><strong>Personal</strong><small>My vehicles</small></span></button>
+        <button class="auth-tab" type="button" data-arole="garage_owner"><span>🔧</span><span><strong>Garage</strong><small>My workshop</small></span></button>
+      </div>
+
+      <form id="authForm" class="auth-gate-form">
+        <input type="hidden" id="authRoleInput" value="personal" />
+        <input type="hidden" id="authModeInput" value="login" />
+        <p id="authMessage" class="auth-message" role="status" hidden></p>
+
+        <div id="nameField" hidden>
+          <label for="aName">Your name</label>
+          <input type="text" id="aName" placeholder="e.g. Alex Morgan" />
+        </div>
+
+        <div id="garageBusinessFields" hidden>
+          <label for="aBusinessName">Garage / business name</label>
+          <input type="text" id="aBusinessName" placeholder="e.g. Apex Auto Care" />
+          <div class="form-row auth-business-row">
+            <div><label for="aPhone">Phone number</label><input type="tel" id="aPhone" placeholder="+91 98765 43210" /></div>
+            <div><label for="aCity">City</label><input type="text" id="aCity" placeholder="Pune" /></div>
+          </div>
+          <label for="aSpecialization">Services offered</label>
+          <input type="text" id="aSpecialization" placeholder="Repairs, servicing, tyres…" />
+        </div>
+
+        <label for="aEmail">Email address</label>
+        <input type="email" id="aEmail" required autocomplete="username" placeholder="you@example.com" />
+        <label for="aPassword">Password</label>
+        <input type="password" id="aPassword" required autocomplete="current-password" placeholder="Enter your password" />
+
+        <div class="auth-toggle-link"><span id="authToggleText">New to TrackNTune?</span><button type="button" class="btn-link" id="authToggleBtn">Create an account</button></div>
+        <button type="submit" class="btn primary auth-submit-btn" id="authSubmitBtn">Sign in to my dashboard <span>→</span></button>
+      </form>
+
+      <div class="auth-demo-note" id="authDemoNote"><span>✨</span><p><strong>Project demo account</strong><br /><span id="authDemoCredentials">Personal: user@trackntune.com · password123</span></p><button type="button" id="demoFillBtn">Fill demo</button></div>
+      <p class="auth-privacy-note">By continuing, you agree to use TrackNTune responsibly. Your demo data stays in this project.</p>
+    </div>
+  </div>
+</section>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-badge">TNT</span>
+    <div class="brand-text">
+      <span class="brand-name">TrackNTune</span>
+      <span class="brand-tag">Fleet • Garage Portal • AI Mechanic</span>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search vehicle, plate, garage record..." />
+  </div>
+
+  <nav class="nav-views" id="mainNavTabs">
+    <button class="nav-view-btn active" data-view="fleet">🏎️ Fleet View</button>
+    <button class="nav-view-btn" data-view="garage" id="garageNavBtn">🏢 Garage Portal</button>
+    <button class="nav-view-btn highlight-ai" id="openAiBotBtn">🤖 AI Mechanic</button>
+  </nav>
+
+  <div class="top-actions">
+    <button class="btn secondary auth-badge-btn" id="openAuthBtn">
+      <span id="userBadgeIcon">🔐</span>
+      <span id="userBadgeText">Login / Register</span>
+    </button>
+    <select id="themeSelect" class="theme-select" title="Switch App Theme">
+      <option value="dark">🌙 Carbon Dark</option>
+      <option value="light">☀️ Clean Light</option>
+      <option value="cyber">⚡ Cyber Neon</option>
+    </select>
+    <button class="btn secondary" id="openTripPlannerBtn" title="Trip Fuel Planner">🧭 Trip Planner</button>
+    <button class="btn secondary" id="openCompareBtn" title="Compare Fleet Costs">📊 Compare Fleet</button>
+    <button class="btn secondary" id="exportAllBtn" title="Export CSV Report">📥 Export CSV</button>
+    <button class="btn primary" id="openAddVehicle">+ Add Vehicle</button>
+  </div>
+</header>
+<div class="road-line"></div>
+
+<main>
+
+  <!-- Global Action Banner for Urgent Expiries / Services -->
+  <div class="action-banner" id="globalAlertBanner" hidden>
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-text" id="globalAlertText"></div>
+  </div>
+
+  <!-- View 1: Personal Fleet Dashboard -->
+  <section id="dashboardView">
+    <div class="filter-bar">
+      <nav class="tabs" id="typeTabs">
+        <button class="tab active" data-type="all">All Fleet</button>
+        <button class="tab" data-type="car">🚗 Cars</button>
+        <button class="tab" data-type="bike">🏍️ Bikes / Scooters</button>
+        <button class="tab" data-type="action">⚠️ Action Needed</button>
+      </nav>
+      <div class="quick-ai-banner" id="aiQuickPromptBanner">
+        <span>💡 Need tyre recommendations or specs for Activa 125 or bike maintenance?</span>
+        <button class="btn secondary small" id="bannerAskAiBtn">Ask AI Mechanic 🤖</button>
+      </div>
+    </div>
+
+    <div class="stats-row" id="statsRow"></div>
+    <div class="grid" id="vehicleGrid"></div>
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="empty-icon">🏎️</div>
+      <h3>No vehicles found</h3>
+      <p>Click "+ Add Vehicle" to log your first car, motorcycle, or scooter.</p>
+    </div>
+  </section>
+
+  <!-- View 2: Garage Business Owner Portal (Requirement 1 & 4) -->
+  <section id="garageOwnerView" hidden>
+    <div class="garage-hero-card">
+      <div class="garage-hero-content">
+        <div class="garage-badge-tag">GARAGE OWNER PORTAL</div>
+        <h2 id="garageHeroName">Apex Moto & Auto Tuning Garage</h2>
+        <p id="garageHeroDetails">Owner: Rajesh Sharma • Phone: +91 98765 43210 • Specialization: Scooter & Bike Tyre Specialist, Multi-Brand Maintenance</p>
+      </div>
+      <div class="garage-hero-actions">
+        <button class="btn primary" id="openAddGarageRecordBtn">+ Create Job Card / Service Record</button>
+        <button class="btn secondary" id="openAddInventoryBtn">+ Add Stock Item</button>
+        <button class="btn secondary" id="openQuickEstimateBtn">🧮 Quick Estimate</button>
+        <button class="btn secondary" id="switchUserRoleBtn">Log out</button>
+      </div>
+    </div>
+
+    <div class="stats-row" id="garageStatsRow"></div>
+
+    <!-- Garage Sub-Navigation Tabs -->
+    <div class="detail-nav" style="margin-top: 20px;">
+      <button class="d-tab active" id="garageTabJobCards" data-gtab="jobcards">📋 Job Cards & Customer Records</button>
+      <button class="d-tab" id="garageTabInventory" data-gtab="inventory">📦 Spare Parts Stock & Inventory</button>
+    </div>
+
+    <!-- Section 1: Job Cards -->
+    <div id="garageJobCardsSection" class="card" style="margin-top: 10px;">
+      <div class="card-head">
+        <div>
+          <h3>Garage Business Records & Job Cards</h3>
+          <p class="hint">Stored records under business name <strong id="garageBusinessNameLabel">Apex Moto & Auto Tuning Garage</strong></p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="garageSearchInput" placeholder="Filter by customer, vehicle, plate..." style="padding:6px 12px; font-size:0.85rem;" />
+          <select id="garageFilterStatus" style="padding:6px 12px; font-size:0.85rem;">
+            <option value="all">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
+      <div id="garageRecordList" class="garage-record-grid"></div>
+    </div>
+
+    <!-- Section 2: Spare Parts Inventory -->
+    <div id="garageInventorySection" class="card" style="margin-top: 10px;" hidden>
+      <div class="card-head">
+        <div>
+          <h3>Workshop Spare Parts & Stock Tracker</h3>
+          <p class="hint">Track available oils, tyres, brake pads, and spark plugs with low stock alerts.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="inventorySearchInput" placeholder="Search spare parts..." style="padding:6px 12px; font-size:0.85rem;" />
+          <button class="btn primary small" id="openAddInventoryBtn2">+ Add New Part</button>
+        </div>
+      </div>
+      <div id="inventoryAlertBox" hidden class="alert-box warning" style="margin: 12px 0;">
+        ⚠️ <span id="inventoryAlertMsg">Low stock warning on parts!</span>
+      </div>
+      <div class="table-responsive" style="overflow-x:auto;">
+        <table class="data-table" id="inventoryTable" style="width:100%; border-collapse:collapse; margin-top:10px;">
+          <thead>
+            <tr style="text-align:left; border-bottom:1px solid var(--border);">
+              <th style="padding:10px;">Part Name</th>
+              <th style="padding:10px;">Category</th>
+              <th style="padding:10px;">Stock Qty</th>
+              <th style="padding:10px;">Selling Price</th>
+              <th style="padding:10px;">Cost Price</th>
+              <th style="padding:10px;">Supplier</th>
+              <th style="padding:10px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- View 3: Vehicle Detail View (Includes Requirement 2 - Health & Condition) -->
+  <section id="detailView" hidden>
+    <div class="detail-top-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <button class="btn ghost back-btn" id="backBtn" style="margin-bottom:0;">&larr; Back to Fleet Dashboard</button>
+      <div style="display:flex; gap:10px;">
+        <button class="btn secondary small" id="askAiAboutVehicleBtn">🤖 Ask AI About This Vehicle</button>
+        <button class="btn secondary small print-hide-btn" id="printCertBtn">🖨️ Print Service Certificate</button>
+      </div>
+    </div>
+
+    <div class="detail-hero" id="detailHero"></div>
+
+    <!-- Detail Sub Tabs -->
+    <div class="detail-nav">
+      <button class="d-tab active" data-dtab="services">🛠️ Service Log</button>
+      <button class="d-tab" data-dtab="fuel">⛽ Fuel & Mileage</button>
+      <button class="d-tab" data-dtab="condition">🩺 Health & Condition</button>
+      <button class="d-tab" data-dtab="documents">📄 Document Vault</button>
+      <button class="d-tab" data-dtab="analytics">📊 Analytics & Expenses</button>
+      <button class="d-tab" data-dtab="checklist">📋 Pre-Trip Checklist</button>
+    </div>
+
+    <!-- Tab 1: Service Log -->
+    <div class="d-pane" id="paneServices">
+      <div class="card">
+        <div class="card-head">
+          <h3>Service & Maintenance History</h3>
+          <button class="btn primary small" id="openAddService">+ Log Service Entry</button>
+        </div>
+        <div id="serviceList" class="service-list"></div>
+      </div>
+    </div>
+
+    <!-- Tab 2: Fuel Log -->
+    <div class="d-pane" id="paneFuel" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h3>Fuel Refills & Mileage Log</h3>
+          <button class="btn primary small" id="openAddFuel">+ Log Fuel Refill</button>
+        </div>
+        <div id="fuelList" class="fuel-list"></div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Health & Condition (Requirement 2) -->
+    <div class="d-pane" id="paneCondition" hidden>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h3>🩺 Vehicle Condition & Health Diagnostics</h3>
+            <p class="hint">Record engine health, tyre sizes, pressure PSI, brake wear, and battery status for your vehicle.</p>
+          </div>
+          <button class="btn primary small" id="openEditConditionBtn">✏️ Update Vehicle Condition</button>
+        </div>
+        <div id="conditionDisplayGrid" class="condition-display-grid"></div>
+      </div>
+    </div>
+
+    <!-- Tab 4: Document Vault -->
+    <div class="d-pane" id="paneDocuments" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h3>Compliance & Expiry Tracker</h3>
+          <button class="btn secondary small" id="editDocsBtn">✏️ Edit Expiry Dates</button>
+        </div>
+        <div id="docsVaultGrid" class="docs-vault-grid"></div>
+      </div>
+    </div>
+
+    <!-- Tab 5: Analytics -->
+    <div class="d-pane" id="paneAnalytics" hidden>
+      <div class="analytics-grid">
+        <div class="card">
+          <h3>Spend Breakdown by Category</h3>
+          <div id="categoryChart" class="chart-container"></div>
+        </div>
+        <div class="card">
+          <h3>Fuel Mileage Trend (km/L)</h3>
+          <div id="mileageChart" class="chart-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 6: Pre-Trip Safety Checklist -->
+    <div class="d-pane" id="paneChecklist" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h3>📋 Pre-Trip Safety & Maintenance Checklist</h3>
+          <button class="btn secondary small" id="resetChecklistBtn">🔄 Reset Checklist</button>
+        </div>
+        <p class="hint">Perform these essential checks before embarking on long road trips or daily commutes.</p>
+        <div id="checklistContainer" class="checklist-grid"></div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- MODALS -->
+
+<!-- Modal 2: Garage Job Card / Record Modal (Requirement 4) -->
+<div class="modal-overlay" id="garageJobCardModal" hidden>
+  <div class="modal large">
+    <div class="modal-head">
+      <h3 id="garageRecordModalTitle">Create Garage Business Service Record</h3>
+      <button class="icon-btn" data-close="garageJobCardModal">✕</button>
+    </div>
+    <form id="garageJobCardForm">
+      <input type="hidden" id="grecId" />
+
+      <label>Business Name (Record Stored Under)</label>
+      <input type="text" id="grecBusinessName" readonly style="background:var(--bg-card-alt); font-weight:700;" />
+
+      <div class="form-row">
+        <div>
+          <label>Customer Name <span class="required">*</span></label>
+          <input type="text" id="grecCustomerName" required placeholder="Anand Verma" />
+        </div>
+        <div>
+          <label>Customer Phone</label>
+          <input type="text" id="grecCustomerPhone" placeholder="+91 98989 12345" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Vehicle Type</label>
+          <select id="grecVehicleType">
+            <option value="bike">🏍️ Motorcycle / Scooter (e.g. Activa 125)</option>
+            <option value="car">🚗 Car / SUV</option>
+          </select>
+        </div>
+        <div>
+          <label>Vehicle Model Name <span class="required">*</span></label>
+          <input type="text" id="grecVehicleName" required placeholder="Honda Activa 125 / Royal Enfield 650" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Registration Number</label>
+          <input type="text" id="grecRegNumber" placeholder="MH12 AB 1250" />
+        </div>
+        <div>
+          <label>Odometer Reading (km)</label>
+          <input type="number" id="grecOdometer" placeholder="14200" />
+        </div>
+      </div>
+
+      <label>Work Done & Parts Replaced <span class="required">*</span></label>
+      <textarea id="grecWorkDone" rows="3" required placeholder="e.g. Replaced rear tyre with MRF Zapper 90/100-10, 10W-30 engine oil change, CBS brake tuning."></textarea>
+
+      <label style="margin-top:10px;">Select Part from Stock (Optional - Auto-populates price & deducts stock)</label>
+      <select id="grecSelectPart">
+        <option value="">-- Select from Inventory Stock (Optional) --</option>
+      </select>
+
+      <div class="form-row" style="margin-top:10px;">
+        <div>
+          <label>Spare Parts Cost (₹)</label>
+          <input type="number" id="grecPartsCost" placeholder="1950" />
+        </div>
+        <div>
+          <label>Labor Charges (₹)</label>
+          <input type="number" id="grecLaborCost" placeholder="400" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Total Bill Amount (₹) <span class="required">*</span> <span class="hint">(Auto-calculated)</span></label>
+          <input type="number" id="grecTotalAmount" required placeholder="2350" />
+        </div>
+        <div>
+          <label>Job Card Status</label>
+          <select id="grecStatus">
+            <option value="Completed">Completed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="section-divider">📋 6-Point Vehicle Inspection Checklist</label>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin: 8px 0 14px; font-size:0.85rem; color:var(--text-main);">
+        <label style="text-transform:none; margin:0; font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="chkOil" checked style="width:auto;" /> 🛢️ Engine Oil Level Checked
+        </label>
+        <label style="text-transform:none; margin:0; font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="chkBrakes" checked style="width:auto;" /> 🛑 Brakes & Pad Wear Checked
+        </label>
+        <label style="text-transform:none; margin:0; font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="chkTyres" checked style="width:auto;" /> 🛞 Tyre Tread & Pressure Checked
+        </label>
+        <label style="text-transform:none; margin:0; font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="chkBattery" checked style="width:auto;" /> ⚡ Battery Voltage (12.6V) Checked
+        </label>
+        <label style="text-transform:none; margin:0; font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="chkChain" checked style="width:auto;" /> ⛓️ Chain / Drive Belt Tensioned
+        </label>
+        <label style="text-transform:none; margin:0; font-size:0.85rem; font-weight:normal; display:flex; align-items:center; gap:6px;">
+          <input type="checkbox" id="chkLights" checked style="width:auto;" /> 💡 Headlights & Horn Functional
+        </label>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Vehicle Condition Post Service</label>
+          <select id="grecVehicleCondition">
+            <option value="Excellent">Excellent</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+            <option value="Attention Needed">Attention Needed</option>
+          </select>
+        </div>
+        <div>
+          <label>Service Date</label>
+          <input type="date" id="grecServiceDate" />
+        </div>
+      </div>
+
+      <label style="margin-top:10px;">Additional Notes / Advice to Customer</label>
+      <input type="text" id="grecNotes" placeholder="Next oil change due in 3,000 km." />
+
+      <div class="modal-actions" style="display:flex; gap:10px; margin-top:20px;">
+        <button type="button" class="btn secondary" data-close="garageJobCardModal">Cancel</button>
+        <button type="submit" class="btn primary" style="flex:1;">Save Garage Record</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal 3: Vehicle Health & Condition Modal (Requirement 2) -->
+<div class="modal-overlay" id="conditionModal" hidden>
+  <div class="modal large">
+    <div class="modal-head">
+      <h3>🩺 Update Vehicle Condition & Tyre Specs</h3>
+      <button class="icon-btn" data-close="conditionModal">✕</button>
+    </div>
+    <form id="conditionForm">
+      <input type="hidden" id="cVehicleId" />
+
+      <div class="form-row">
+        <div>
+          <label>Overall Health Score (0 - 100%)</label>
+          <input type="number" id="cHealthScore" min="0" max="100" value="85" required />
+        </div>
+        <div>
+          <label>Overall Condition Rating</label>
+          <select id="cOverallStatus">
+            <option value="Excellent">Excellent (No issues)</option>
+            <option value="Good">Good (Minor wear)</option>
+            <option value="Fair">Fair (Scheduled maintenance due)</option>
+            <option value="Needs Attention">Needs Attention (Wear detected)</option>
+            <option value="Critical">Critical (Immediate repair needed)</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="section-divider"> Engine & Lubrication</label>
+      <div class="form-row">
+        <div>
+          <label>Engine Health Status</label>
+          <input type="text" id="cEngineStatus" placeholder="e.g. Good (Smooth Idling)" />
+        </div>
+        <div>
+          <label>Engine Oil Level</label>
+          <select id="cOilLevel">
+            <option value="100%">100% Full</option>
+            <option value="75%">75% Good</option>
+            <option value="50%">50% Half</option>
+            <option value="Low">Low / Top-up Needed</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="section-divider">🛞 Tyre Specs & Condition (Front & Rear)</label>
+      <div class="form-row">
+        <div>
+          <label>Front Tyre Size <span class="hint">(e.g. 90/90-12 for Activa 125)</span></label>
+          <input type="text" id="cFrontTyreSize" placeholder="90/90-12" />
+        </div>
+        <div>
+          <label>Rear Tyre Size <span class="hint">(e.g. 90/100-10 for Activa 125)</span></label>
+          <input type="text" id="cRearTyreSize" placeholder="90/100-10" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Front Tyre Condition</label>
+          <select id="cFrontTyreCondition">
+            <option value="New">New / Fresh</option>
+            <option value="Good">Good (Sufficient Tread)</option>
+            <option value="Worn">Worn (Near Indicator)</option>
+            <option value="Replace Soon">Replace Soon</option>
+          </select>
+        </div>
+        <div>
+          <label>Rear Tyre Condition</label>
+          <select id="cRearTyreCondition">
+            <option value="New">New / Fresh</option>
+            <option value="Good">Good (Sufficient Tread)</option>
+            <option value="Worn">Worn (Near Indicator)</option>
+            <option value="Replace Soon">Replace Soon</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Front Tyre Pressure (PSI)</label>
+          <input type="number" id="cFrontPressure" placeholder="24" />
+        </div>
+        <div>
+          <label>Rear Tyre Pressure (PSI)</label>
+          <input type="number" id="cRearPressure" placeholder="29" />
+        </div>
+      </div>
+
+      <label class="section-divider">⚡ Brakes, Battery & Transmission</label>
+      <div class="form-row">
+        <div>
+          <label>Brake Pad Wear</label>
+          <input type="text" id="cBrakeWear" placeholder="e.g. 75% Remaining / Good" />
+        </div>
+        <div>
+          <label>Battery Status / Voltage</label>
+          <input type="text" id="cBatteryStatus" placeholder="e.g. 12.6V Healthy" />
+        </div>
+      </div>
+
+      <label>Inspection Notes & Diagnostic Comments</label>
+      <textarea id="cNotes" rows="2" placeholder="e.g. Rear tyre tread 1.5mm remaining. Recommend replacing with MRF Zapper 90/100-10."></textarea>
+
+      <div class="modal-actions" style="display:flex; gap:10px; margin-top:20px;">
+        <button type="button" class="btn secondary" data-close="conditionModal">Cancel</button>
+        <button type="submit" class="btn primary" style="flex:1;">Save Condition Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal 4: AI Mechanic & Technical Advisor Chatbot (Requirement 3) -->
+<div class="modal-overlay" id="aiChatModal" hidden>
+  <div class="modal ai-chat-modal">
+    <div class="ai-chat-header">
+      <div class="ai-heading-icon">✦</div>
+      <div class="ai-heading-copy"><h3>TrackNTune Assistant</h3><p><span class="ai-online-dot"></span> Here to help with your vehicle</p></div>
+      <button class="icon-btn" data-close="aiChatModal" aria-label="Close chat">✕</button>
+    </div>
+
+    <div class="ai-vehicle-picker">
+      <span>ASKING ABOUT</span>
+      <select id="aiVehicleSelect" aria-label="Choose vehicle context"><option value="">General question</option></select>
+    </div>
+
+    <div class="ai-chat-window" id="aiChatMessages">
+      <div class="ai-welcome" id="aiWelcome">
+        <div class="ai-welcome-mark">✦</div>
+        <h4>What can I help with?</h4>
+        <p>Ask a quick question about servicing, tyres or your vehicle.</p>
+        <div class="ai-prompt-chips">
+          <button class="chip-btn" data-chip="What tyre pressure should I use?">Tyre pressure</button>
+          <button class="chip-btn" data-chip="When should I change my engine oil?">Oil change</button>
+          <button class="chip-btn" data-chip="How can I improve my mileage?">Improve mileage</button>
+        </div>
+      </div>
+    </div>
+
+    <form id="aiChatForm" class="ai-chat-form">
+      <input type="text" id="aiChatInput" placeholder="Message your vehicle assistant…" autocomplete="off" required />
+      <button type="submit" class="ai-send-btn" id="aiSendBtn" aria-label="Send message">↑</button>
+    </form>
+  </div>
+</div>
+
+<!-- Add / Edit Vehicle Modal -->
+<div class="modal-overlay" id="vehicleModal" hidden>
+  <div class="modal large">
+    <div class="modal-head">
+      <h3 id="vehicleModalTitle">Add New Vehicle</h3>
+      <button class="icon-btn" data-close="vehicleModal">✕</button>
+    </div>
+    <form id="vehicleForm">
+      <input type="hidden" id="vehicleId" />
+
+      <label>Vehicle Type</label>
+      <div class="radio-row">
+        <label class="radio-pill"><input type="radio" name="type" value="car" checked /> 🚗 Car</label>
+        <label class="radio-pill"><input type="radio" name="type" value="bike" /> 🏍️ Motorcycle / Scooter</label>
+      </div>
+
+      <label>Vehicle Image / Avatar Preset</label>
+      <div class="image-preset-grid" id="imagePresetGrid"></div>
+      <input type="text" id="vImageUrl" placeholder="Or paste custom image URL (https://...)" style="margin-top: 8px;" />
+
+      <label>Vehicle Nickname <span class="hint">(e.g. "Honda Activa 125", "BMW 3 Series")</span></label>
+      <input type="text" id="vName" required placeholder="Honda Activa 125" />
+
+      <div class="form-row">
+        <div>
+          <label>Make / Brand</label>
+          <input type="text" id="vMake" placeholder="Honda" />
+        </div>
+        <div>
+          <label>Model</label>
+          <input type="text" id="vModel" placeholder="Activa 125" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Model Year</label>
+          <input type="number" id="vYear" placeholder="2023" />
+        </div>
+        <div>
+          <label>Registration Number</label>
+          <input type="text" id="vReg" placeholder="MH12 AB 1250" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Fuel Type</label>
+          <select id="vFuel">
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Electric">Electric (EV)</option>
+            <option value="CNG">CNG</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
+        </div>
+        <div>
+          <label>Current Odometer (km)</label>
+          <input type="number" id="vOdometer" required placeholder="14200" />
+        </div>
+      </div>
+
+      <label class="section-divider">Compliance & Document Expiries</label>
+      <div class="form-row">
+        <div>
+          <label>Insurance Expiry Date</label>
+          <input type="date" id="vInsuranceExpiry" />
+        </div>
+        <div>
+          <label>PUC Expiry Date</label>
+          <input type="date" id="vPucExpiry" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <label>Road Tax Expiry Date</label>
+          <input type="date" id="vTaxExpiry" />
+        </div>
+        <div>
+          <label>Default Service Interval (km)</label>
+          <input type="number" id="vIntervalKm" value="3000" />
+        </div>
+      </div>
+
+      <label>Notes & Specifications</label>
+      <textarea id="vNotes" rows="2" placeholder="Engine size, oil grade specs, key notes..."></textarea>
+
+      <div class="modal-actions" style="display:flex; gap:10px; margin-top:16px;">
+        <button type="button" class="btn secondary" data-close="vehicleModal">← Back</button>
+        <button type="submit" class="btn primary" style="flex:1;">Save Vehicle</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Service Modal -->
+<div class="modal-overlay" id="serviceModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="btn ghost small" data-close="serviceModal" style="padding:0; margin-right:4px;">← Back</button>
+        <h3>Log a Service Entry</h3>
+      </div>
+      <button class="icon-btn" data-close="serviceModal">✕</button>
+    </div>
+    <form id="serviceForm">
+      <input type="hidden" id="sVehicleId" />
+
+      <div class="form-row">
+        <div>
+          <label>Service Date</label>
+          <input type="date" id="sDate" required />
+        </div>
+        <div>
+          <label>Odometer Reading (km)</label>
+          <input type="number" id="sOdometer" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Category</label>
+          <select id="sCategory">
+            <option value="Maintenance">Maintenance</option>
+            <option value="Repair">Repair</option>
+            <option value="Tires">Tires & Wheels</option>
+            <option value="Inspection">Inspection & Wash</option>
+            <option value="Modification">Modification & Upgrade</option>
+          </select>
+        </div>
+        <div>
+          <label>Service Type</label>
+          <select id="sType"></select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Total Cost (₹)</label>
+          <input type="number" id="sCost" placeholder="1850" />
+        </div>
+        <div>
+          <label>Garage / Service Center</label>
+          <select id="sGarageSelect">
+            <option value="Apex Moto & Auto Tuning Garage">Apex Moto & Auto Tuning Garage</option>
+            <option value="Authorized Service Center">Authorized Service Center</option>
+            <option value="Other / Independent Garage">Other / Independent Garage</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Notes & Parts Replaced</label>
+      <textarea id="sNotes" rows="2" placeholder="Oil grade used, tyre brand fitted, spark plug type..."></textarea>
+
+      <p class="hint">Interval until NEXT service (leave empty for vehicle default):</p>
+      <div class="form-row">
+        <div>
+          <label>Next due in (km)</label>
+          <input type="number" id="sIntervalKm" placeholder="e.g. 3000" />
+        </div>
+        <div>
+          <label>Next due in (months)</label>
+          <input type="number" id="sIntervalMonths" placeholder="e.g. 6" />
+        </div>
+      </div>
+
+      <div class="modal-actions" style="display:flex; gap:10px; margin-top:16px;">
+        <button type="button" class="btn secondary" data-close="serviceModal">← Back</button>
+        <button type="submit" class="btn primary" style="flex:1;">Save Service Record</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add Fuel Modal -->
+<div class="modal-overlay" id="fuelModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="btn ghost small" data-close="fuelModal" style="padding:0; margin-right:4px;">← Back</button>
+        <h3>Log Fuel Refill</h3>
+      </div>
+      <button class="icon-btn" data-close="fuelModal">✕</button>
+    </div>
+    <form id="fuelForm">
+      <input type="hidden" id="fVehicleId" />
+
+      <div class="form-row">
+        <div>
+          <label>Date</label>
+          <input type="date" id="fDate" required />
+        </div>
+        <div>
+          <label>Odometer (km)</label>
+          <input type="number" id="fOdometer" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label id="fVolumeLabel">Fuel Quantity (Liters)</label>
+          <input type="number" step="0.01" id="fLiters" required placeholder="4.8" />
+        </div>
+        <div>
+          <label id="fPriceLabel">Price per Liter (₹)</label>
+          <input type="number" step="0.01" id="fPrice" required placeholder="104.2" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Total Cost (₹)</label>
+          <input type="number" step="0.01" id="fTotalCost" placeholder="500" />
+        </div>
+        <div>
+          <label>Gas Station / Charger</label>
+          <input type="text" id="fStation" placeholder="HP Petrol Pump / Shell" />
+        </div>
+      </div>
+
+      <div class="checkbox-row" style="margin-top: 12px;">
+        <label><input type="checkbox" id="fFullTank" checked /> Full Tank Refill (Required for precise km/L calculation)</label>
+      </div>
+
+      <label style="margin-top: 10px;">Notes</label>
+      <input type="text" id="fNotes" placeholder="City commute fill-up" />
+
+      <div class="modal-actions" style="display:flex; gap:10px; margin-top:16px;">
+        <button type="button" class="btn secondary" data-close="fuelModal">← Back</button>
+        <button type="submit" class="btn primary" style="flex:1;">Save Fuel Record</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Trip Fuel Cost Planner Modal -->
+<div class="modal-overlay" id="tripPlannerModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="btn ghost small" data-close="tripPlannerModal" style="padding:0; margin-right:4px;">← Back</button>
+        <h3>🧭 Trip Fuel Cost Calculator</h3>
+      </div>
+      <button class="icon-btn" data-close="tripPlannerModal">✕</button>
+    </div>
+    <form id="tripPlannerForm">
+      <label>Select Vehicle</label>
+      <select id="tripVehicleSelect" required></select>
+
+      <div class="form-row" style="margin-top: 12px;">
+        <div>
+          <label>Planned Distance (km)</label>
+          <input type="number" id="tripDistance" required placeholder="e.g. 350" min="1" />
+        </div>
+        <div>
+          <label>Passengers (Cost Split)</label>
+          <input type="number" id="tripPassengers" value="1" min="1" max="10" placeholder="1" />
+        </div>
+      </div>
+
+      <label style="margin-top: 12px;">Fuel Price per Liter / kWh (₹)</label>
+      <input type="number" step="0.01" id="tripFuelPrice" required placeholder="104.5" />
+
+      <div class="trip-result-card" id="tripResultCard" style="margin-top: 16px;" hidden>
+        <div class="trip-stat-row">
+          <span class="t-label">Est. Fuel Volume:</span>
+          <span class="t-val" id="tripEstFuel">0 L</span>
+        </div>
+        <div class="trip-stat-row">
+          <span class="t-label">Total Trip Cost:</span>
+          <span class="t-val highlight" id="tripEstCost">₹0</span>
+        </div>
+        <div class="trip-stat-row">
+          <span class="t-label">Cost per Person:</span>
+          <span class="t-val" id="tripCostPerPerson" style="color:var(--green); font-weight:700;">₹0</span>
+        </div>
+        <div class="trip-stat-row">
+          <span class="t-label">Avg Economy Used:</span>
+          <span class="t-val" id="tripAvgEconomy">-- km/L</span>
+        </div>
+      </div>
+
+      <div class="modal-actions" style="display:flex; gap:10px; margin-top:16px;">
+        <button type="button" class="btn secondary" data-close="tripPlannerModal">← Back</button>
+        <button type="submit" class="btn primary" style="flex:1;">Calculate Trip Cost</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Fleet Cost & Efficiency Comparison Modal -->
+<div class="modal-overlay" id="compareModal" hidden>
+  <div class="modal large">
+    <div class="modal-head">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="btn secondary small" data-close="compareModal">← Back to Fleet</button>
+        <h3>📊 Fleet Cost & Performance Comparison</h3>
+      </div>
+      <button class="icon-btn" data-close="compareModal">✕</button>
+    </div>
+    <p class="hint">Side-by-side breakdown of total ownership costs, mileage efficiency, and running cost per kilometer across your fleet.</p>
+    <div id="compareGrid" class="compare-grid" style="margin-top: 14px;"></div>
+  </div>
+</div>
+
+<!-- Floating Action Button Stack & Sticky AI Mechanic Button -->
+<div class="fab-container" id="fabContainer">
+  <button class="fab-ai-btn" id="floatingAiBtn" title="AI Mechanic Assistant">🤖 AI Mechanic</button>
+  <div class="fab-menu" id="fabMenu" hidden>
+    <button class="fab-item" id="fabLogFuel" title="Log Fuel Refill">⛽ Log Fuel</button>
+    <button class="fab-item" id="fabLogService" title="Log Maintenance">🛠️ Log Service</button>
+    <button class="fab-item" id="fabAddVehicle" title="Add New Vehicle">🏎️ Add Vehicle</button>
+  </div>
+  <button class="fab-main-btn" id="fabMainBtn" title="Quick Actions">+</button>
+</div>
+
+<!-- Printable Garage Invoice / Bill Receipt Modal -->
+<div class="modal-overlay" id="garageInvoiceModal" hidden>
+  <div class="modal large printable-invoice-modal">
+    <div class="modal-head print-hide">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button class="btn secondary small" data-close="garageInvoiceModal">← Back</button>
+        <h3>📄 Customer Tax Invoice / Receipt</h3>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn primary small" id="printGarageInvoiceBtn">🖨️ Print Customer Bill</button>
+        <button class="icon-btn" data-close="garageInvoiceModal">✕</button>
+      </div>
+    </div>
+    <div id="printableInvoiceContent" class="invoice-container">
+      <!-- Generated dynamically in script.js -->
+    </div>
+  </div>
+</div>
+
+<!-- Add Spare Part Inventory Item Modal -->
+<div class="modal-overlay" id="inventoryModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <h3>📦 Add Spare Part to Stock Inventory</h3>
+      <button class="icon-btn" data-close="inventoryModal">✕</button>
+    </div>
+    <form id="inventoryForm">
+      <label>Part Name *</label>
+      <input type="text" id="invPartName" required placeholder="e.g. 10W-30 Synthetic Scooter Oil (800ml)" />
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div>
+          <label>Category</label>
+          <select id="invCategory">
+            <option value="Fluids & Lubricants">Fluids & Lubricants</option>
+            <option value="Tyres">Tyres</option>
+            <option value="Brakes">Brakes</option>
+            <option value="Transmission">Transmission</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Filters & Spark Plugs">Filters & Spark Plugs</option>
+            <option value="General Spares">General Spares</option>
+          </select>
+        </div>
+        <div>
+          <label>Part / SKU Number</label>
+          <input type="text" id="invPartNumber" placeholder="OIL-10W30" />
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:10px;">
+        <div>
+          <label>Quantity in Stock *</label>
+          <input type="number" id="invQuantity" required min="0" value="10" />
+        </div>
+        <div>
+          <label>Min Stock Alert Threshold</label>
+          <input type="number" id="invMinStock" required min="1" value="5" />
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:10px;">
+        <div>
+          <label>Selling Price per Unit (₹) *</label>
+          <input type="number" step="0.01" id="invUnitPrice" required placeholder="380" />
+        </div>
+        <div>
+          <label>Purchase Cost Price (₹)</label>
+          <input type="number" step="0.01" id="invCostPrice" placeholder="290" />
+        </div>
+      </div>
+
+      <label style="margin-top:10px;">Supplier / Distributor</label>
+      <input type="text" id="invSupplier" placeholder="Motul / MRF Distributor" />
+
+      <label style="margin-top:10px;">Notes / Compatibility</label>
+      <input type="text" id="invNotes" placeholder="Fits Activa 125, Jupiter, Access..." />
+
+      <div class="modal-actions" style="margin-top:16px;">
+        <button type="button" class="btn secondary" data-close="inventoryModal">Cancel</button>
+        <button type="submit" class="btn primary" id="saveInventoryBtn">Save to Stock</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Quick Price Estimate / Repair Quotation Modal -->
+<div class="modal-overlay" id="garageQuotationModal" hidden>
+  <div class="modal">
+    <div class="modal-head">
+      <h3>🧮 Quick Repair Price Quotation Calculator</h3>
+      <button class="icon-btn" data-close="garageQuotationModal">✕</button>
+    </div>
+    <form id="quotationForm">
+      <label>Customer / Vehicle Details</label>
+      <input type="text" id="quoteCustomer" required placeholder="e.g. Rahul Sharma - Activa 125 (MH12 AB 1234)" />
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:10px;">
+        <div>
+          <label>Estimated Parts Cost (₹)</label>
+          <input type="number" id="quoteParts" required value="0" placeholder="1200" />
+        </div>
+        <div>
+          <label>Estimated Labor Charges (₹)</label>
+          <input type="number" id="quoteLabor" required value="0" placeholder="400" />
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:10px;">
+        <div>
+          <label>Estimated GST (18%)</label>
+          <input type="number" id="quoteGst" readonly style="background:var(--asphalt);" placeholder="₹0" />
+        </div>
+        <div>
+          <label>Grand Estimated Total (₹)</label>
+          <input type="number" id="quoteTotal" readonly style="background:var(--asphalt); font-weight:700; color:var(--amber);" placeholder="₹0" />
+        </div>
+      </div>
+
+      <div class="modal-actions" style="margin-top:20px; display:flex; gap:10px;">
+        <button type="button" class="btn secondary" data-close="garageQuotationModal">Close</button>
+        <button type="button" class="btn primary" id="shareQuoteWaBtn" style="flex:1;">📲 Share Estimate via WhatsApp</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="script.js"></script>
+</body>
+</html>
